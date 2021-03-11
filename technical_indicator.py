@@ -34,6 +34,3 @@ def price_diff(close, periods=1):
     return close.diff(periods=periods)
 
 
-def z_score(close):
-    ZSCORE = close.apply(lambda x: (x - x.mean() / x.std()))
-    return ZSCORE
