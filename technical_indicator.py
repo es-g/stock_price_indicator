@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-
+from finta import TA
 
 def simple_ma(close, period=10):
     return close.rolling(window=period).mean()
@@ -12,8 +12,8 @@ def exp_ma(close, period=10):
 
 def bollinger_bands(close, period=20):
     BB_MID = pd.Series(simple_ma(close, length=period), name='BB_MID')
-    BB_UPPER = pd.Series(BB_MID + 2*close.rolling(window=length).std(), name='BB_UPPER')
-    BB_LOWER = pd.Series(BB_MID - 2*close.rolling(window=length).std(), name='BB_LOWER')
+    BB_UPPER = pd.Series(BB_MID + 2 * close.rolling(window=length).std(), name='BB_UPPER')
+    BB_LOWER = pd.Series(BB_MID - 2 * close.rolling(window=length).std(), name='BB_LOWER')
     return pd.concat([BB_MID, BB_UPPER, BB_LOWER], axis=1)
 
 
@@ -57,3 +57,21 @@ def MACD(close, period_fast=12, period_slow=26, signal_period=9):
     MACD_signal_line = pd.Series(MACD_vals.ewm(span=signal_period).mean(), name='MACD_signal')
 
     return pd.concat([MACD_vals, MACD_signal_line], axis=1)
+
+
+def stochastic_oscillator(close, high, low, period=14):
+    max_high = high.rolling(window=period).max()
+    min_low = low.rolling(window=period).min()
+
+    STOCHO = pd.Series((close - min_low) / (max_high - min_low) * 100,
+                       name="{} period stochastic oscillator".format(period))
+
+    return STOCHO
+
+
+def accumulation_distribution(close, low, high, volume):
+    # Calculate current money flow volume
+    cmfv = (((close - low) - (high - close)) / (high - low)) * volume
+    ADI = cmfv.cumsum()
+
+    return ADI
