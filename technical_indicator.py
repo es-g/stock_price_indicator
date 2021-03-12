@@ -13,8 +13,8 @@ def exp_ma(close, period=10):
 
 def bollinger_bands(close, period=20):
     BB_MID = pd.Series(simple_ma(close, length=period), name='BB_MID')
-    BB_UPPER = pd.Series(BB_MID + 2 * close.rolling(window=length).std(), name='BB_UPPER')
-    BB_LOWER = pd.Series(BB_MID - 2 * close.rolling(window=length).std(), name='BB_LOWER')
+    BB_UPPER = pd.Series(BB_MID + 2 * close.rolling(window=period).std(), name='BB_UPPER')
+    BB_LOWER = pd.Series(BB_MID - 2 * close.rolling(window=period).std(), name='BB_LOWER')
     return pd.concat([BB_MID, BB_UPPER, BB_LOWER], axis=1)
 
 
