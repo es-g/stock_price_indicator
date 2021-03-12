@@ -75,3 +75,18 @@ def accumulation_distribution(close, low, high, volume):
     ADI = cmfv.cumsum()
 
     return ADI
+
+
+def true_range(high, low, close):
+    ranges = [high - low, high - close.shift(), close.shift() - low]
+    TR = pd.DataFrame(ranges)
+    TR = TR.abs().max()
+
+    return TR
+
+
+def average_true_range(high, low, close, period=14):
+    TR = true_range(high=high, low=low, close=close)
+
+    return TR.rolling(window=period).mean()
+
