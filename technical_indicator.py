@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from finta import TA
 
+
 def simple_ma(close, period=10):
     return close.rolling(window=period).mean()
 
@@ -90,3 +91,18 @@ def average_true_range(high, low, close, period=14):
 
     return TR.rolling(window=period).mean()
 
+
+def vortex(high, low, close, period=14):
+    positive_vortex = abs(high - low.shift())  # Upward movement
+    negative_vortex = abs(low - high.shift())  # Downward movement
+
+    # Calculating sum for a specified period (typically, 14-day period is used)
+    positive_vortex_sum = positive_vortex.rolling(window=period).sum()
+    negative_vortex_sum = negative_vortex.rolling(window=period).sum()
+
+    TR = true_range(high=high, low=low, close=close).rolling(window=period).sum()
+
+    VI_up = pd.Series(positive_vortex_sum / TR, name='VI_up')
+    VI_down = pd.Series(negative_vortex_sum / TR, name='VI_down')
+
+    return pd.concat([VI_up, VI_down], axis=1)
