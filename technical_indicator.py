@@ -126,3 +126,19 @@ def commodity_channel(high, low, close, period=20, const=.015):
     CCI = (typical_price - typical_price_rolling.mean()) / (const * mean_deviation)
 
     return CCI
+
+
+def signed_difference(series, initial=None):
+    sign = series.diff(1)
+    sign[sign > 0] = 1
+    sign[sign < 0] = -1
+    sign.iloc[0] = initial
+
+    return sign
+
+
+def on_balance_volume(close, volume):
+    signed_vol = signed_difference(close) * volume
+    OBV = signed_vol.cumsum()
+
+    return OBV
