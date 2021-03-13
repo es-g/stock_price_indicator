@@ -109,10 +109,20 @@ def vortex(high, low, close, period=14):
     return pd.concat([VI_up, VI_down], axis=1)
 
 
-def ease_of_movement(high, low, volume, period=14, scale=1e9):
+def ease_of_movement(high, low, volume, period=14, scale=1e6):
     distance = ((high + low) / 2) - (high.shift() + low.shift()) / 2
     box_ratio = (volume / scale) / (high - low)
 
     EMV = distance / box_ratio
 
     return EMV.rolling(window=period).mean()
+
+
+def commodity_channel(high, low, close, period=20, const=.015):
+    typical_price = (high + low + close) / 3
+    typical_price_rolling = typical_price.rolling(window=period, min_periods=0)
+    mean_deviation = typical_price_rolling.apply(lambda series: np.fabs(series - series.mean()).mean())
+
+    CCI = (typical_price - typical_price_rolling.mean()) / (const * mean_deviation)
+
+    return CCI
