@@ -73,6 +73,7 @@ def stochastic_oscillator(close, high, low, period=14):
 def accumulation_distribution(close, low, high, volume):
     # Calculate current money flow volume
     cmfv = (((close - low) - (high - close)) / (high - low)) * volume
+
     ADI = cmfv.cumsum()
 
     return ADI
@@ -106,3 +107,12 @@ def vortex(high, low, close, period=14):
     VI_down = pd.Series(negative_vortex_sum / TR, name='VI_down')
 
     return pd.concat([VI_up, VI_down], axis=1)
+
+
+def ease_of_movement(high, low, volume, period=14, scale=1e9):
+    distance = ((high + low) / 2) - (high.shift() + low.shift()) / 2
+    box_ratio = (volume / scale) / (high - low)
+
+    EMV = distance / box_ratio
+
+    return EMV.rolling(window=period).mean()
