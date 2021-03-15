@@ -22,3 +22,20 @@ def plot_candle_chart(df, period=100):
     plt.legend(loc='upper left')
 
     plt.show()
+
+
+def plot_indicator(df, TI):
+    fig = plt.figure(facecolor='white', figsize=(25, 15))
+
+    ax0 = plt.subplot2grid((12, 8), (1, 0), rowspan=6, colspan=4)
+    ax0.plot(df[['Adj Close', 'BB_MID']], linewidth=2)
+    ax0.set_facecolor('ghostwhite')
+    ax0.legend(['Adj Close', 'SMA'], ncol=3, loc='upper left', fontsize=12)
+    plt.title("SPY Adj Close and OBV", fontsize=15)
+
+    ax1 = plt.subplot2grid((12, 8), (7, 0), rowspan=3, colspan=4, sharex=ax0)
+    ax1.plot(df[TI], linewidth=1)
+    ax1.legend(TI, ncol=3, loc='upper left', fontsize=12)
+    ax1.set_facecolor('silver')
+    plt.subplots_adjust(left=.09, bottom=.09, right=1, top=.95, wspace=.20, hspace=0)
+    plt.show()
