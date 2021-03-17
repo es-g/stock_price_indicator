@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-def plot_candle_chart(df, period=100):
+def plot_candle_chart(df, period=100, short_sma=50, long_sma=200):
     df_plot = df[-period:]
     bullish_df = df_plot[df_plot['Close'] > df_plot['Open']]
     bearish_df = df_plot[df_plot['Close'] < df_plot['Open']]
@@ -15,10 +15,10 @@ def plot_candle_chart(df, period=100):
     plt.vlines(x=bearish_df.index, ymin=bearish_df['Close'], ymax=bearish_df['Open'], color='red', linewidth=4)
 
     sma = pd.DataFrame()
-    sma['20-day'] = df['Close'].rolling(window=20).mean()
-    sma['200-day'] = df['Close'].rolling(window=200).mean()
-    plt.plot(sma[-period:]['20-day'], label='20-day simple moving average')
-    plt.plot(sma[-period:]['200-day'], label='200-day simple moving average')
+    sma['{}-day'.format(short_sma)] = df['Close'].rolling(window=short_sma).mean()
+    sma['{}-day'.format(long_sma)] = df['Close'].rolling(window=long_sma).mean()
+    plt.plot(sma[-period:]['{}-day'.format(short_sma)], label='{}-day simple moving average'.format(short_sma))
+    plt.plot(sma[-period:]['{}-day'.format(long_sma)], label='{}-day simple moving average'.format(long_sma))
     plt.legend(loc='upper left')
 
     plt.show()
