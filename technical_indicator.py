@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-from finta import TA
 
 
 def simple_ma(close, period=10):
@@ -12,7 +11,7 @@ def exp_ma(close, period=10):
 
 
 def bollinger_bands(close, period=20):
-    BB_MID = pd.Series(simple_ma(close, length=period), name='BB_MID')
+    BB_MID = pd.Series(simple_ma(close, period=period), name='BB_MID')
     BB_UPPER = pd.Series(BB_MID + 2 * close.rolling(window=period).std(), name='BB_UPPER')
     BB_LOWER = pd.Series(BB_MID - 2 * close.rolling(window=period).std(), name='BB_LOWER')
     return pd.concat([BB_MID, BB_UPPER, BB_LOWER], axis=1)
@@ -36,6 +35,15 @@ def price_diff(close, periods=1):
 
 
 def RSI(close, period=14):
+    """
+    Calculates Relative Strength Index.
+    This indicator measures the magnitude of recent price changes.
+    Commonly used in technical analysis to evaluate overbought or oversold conditions in the price of a stock.
+    A stock is considered overbought when the RSI is above 70% and oversold when it is below 30%.
+    :param close: (pandas Series) Closing price
+    :param period: (int) specified period (default=14)
+    :return: rsi: (pandas Series) Relative Strength Index
+    """
     delta = close.diff(1)  # Price difference
 
     gain, loss = delta.copy(), delta.copy()
