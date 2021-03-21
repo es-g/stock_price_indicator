@@ -162,7 +162,6 @@ def money_flow_index(volume, high, low, close, period=14):
     tp = pd.Series(typical_price(high=high, low=low, close=close), name='tp')
     rmf = pd.Series(tp * volume, name='rmf')
     mf = pd.concat([tp, rmf], axis=1)
-    print(mf)
     mf['delta'] = mf['tp'].diff(1)
 
     def pos(row):
@@ -180,7 +179,9 @@ def money_flow_index(volume, high, low, close, period=14):
     mf["neg"] = mf.apply(neg, axis=1)
     mf["pos"] = mf.apply(pos, axis=1)
 
-    mfratio = mf['pos'].rolling(window=period).sum() / mf["neg"].rolling(window=period).sum()
+    # Calculate Money Flow Ratio
+    mfr = mf['pos'].rolling(window=period).sum() / mf["neg"].rolling(window=period).sum()
+    MFI = 100 - (100 / (1 + mfr))
 
-    return mfratio
+    return MFI
 
