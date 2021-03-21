@@ -150,3 +150,37 @@ def on_balance_volume(close, volume):
     OBV = signed_vol.cumsum()
 
     return OBV
+
+
+def typical_price(high, low, close):
+    tp = (high + low + close) / 3
+
+    return tp
+
+
+def money_flow_index(volume, high, low, close, period=14):
+    tp = pd.Series(typical_price(high=high, low=low, close=close), name='tp')
+    rmf = pd.Series(tp * volume, name='rmf')
+    mf = pd.concat([tp, rmf], axis=1)
+    print(mf)
+    mf['delta'] = mf['tp'].diff(1)
+
+    def pos(row):
+        if row['delta'] > 0:
+            return row['rmf']
+        else:
+            return 0
+
+    def neg(row):
+        if row['delta'] < 0:
+            return row['rmf']
+        else:
+            return 0
+
+    mf["neg"] = mf.apply(neg, axis=1)
+    mf["pos"] = mf.apply(pos, axis=1)
+
+    mfratio = mf['pos'].rolling(window=period).sum() / mf["neg"].rolling(window=period).sum()
+
+    return mfratio
+
