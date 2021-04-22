@@ -2,14 +2,9 @@
 
 ## Motivation
 
-Predicting the stock market has always been an attractive topic, mainly because of its vitality in the economic and ﬁnancial sectors. As long as markets have existed, investors have searched for ways to acquire knowledge about the companies listed in the market to improve their investment returns. Yet, predictions of the stock market pose a challenging exercise, even to the sharpest minds in the business. Prediction of the stock market is never an easy task, due to the complexity and dynamic characteristics of the data it deals with.
+Predicting the stock market has always been an attractive topic, mainly because of its vitality in the economic and ﬁnancial sectors. As long as markets have existed, investors have searched for ways to gain insights about the companies listed in the market to improve their investment returns. Yet, predictions of the stock market pose a challenge, even to the sharpest minds, mainly, due to the complexity and dynamic characteristics of the data it deals with.
 
-There are several unique challenges present in this domain that are not present in other common areas of machine learning such as Natural Language Processing, spam detection, computer vision and others. These challenges include:
-
-- Switching of regimes (non-stationarity)
-- Reflexivity (market adaptation)
-- Low signal-to-noise ratio
-
+There are several unique challenges present in this domain that are not present in other common areas of machine learning such as Natural Language Processing, spam detection, computer vision, and others. These challenges include switching of regimes (non-stationarity), reflexivity (market adaptation) and low signal-to-noise ratio.
 In this project, I tried to predict the next day’s change in the price of an asset using only historical data and technical indicators.
 
 # Results
