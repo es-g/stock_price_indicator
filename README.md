@@ -12,6 +12,8 @@ There are several unique challenges present in this domain that are not present 
 
 In this project, I tried to predict the next day’s change in the price of an asset using only historical data and technical indicators.
 
+# Results
+The main findings of this code are summarised in a [post](https://yesbol.medium.com/predicting-the-next-days-return-of-a-stock-end-to-end-framework-ca52373d68ce)
 
 ## Conclusion
 
