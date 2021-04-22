@@ -22,3 +22,8 @@ However, these results are not sufficient enough to deploy the model for live tr
 As we saw, predicting the stock market is a very challenging task.
 Feature Engineering requires years of experience in trading as well as a significant time in experimentation. Due to time constraints and lack of domain knowledge, I only considered some features. However, it may be helpful to build other features based on technical indicators. Quantitative traders spend most of their time trying to extract useful features from noisy market data.
 
+## Licence
+MIT License
+
+Copyright (c) 2021 Yesbol Gabdullin
+
